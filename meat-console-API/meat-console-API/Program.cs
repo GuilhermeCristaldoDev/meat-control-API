@@ -1,4 +1,6 @@
 using meat_console_API.Data;
+using meat_console_API.Repositories;
+using meat_console_API.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder();
@@ -6,6 +8,7 @@ var builder = WebApplication.CreateBuilder();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApi();
+builder.Services.AddScoped<ISessionRepository, SessionRepository>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
