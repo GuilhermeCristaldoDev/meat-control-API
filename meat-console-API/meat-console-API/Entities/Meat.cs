@@ -5,6 +5,7 @@ namespace meat_console_API.Entities
     public class Meat
     {
         public int Id { get; private set; }
+        public int MeatNumber { get; private set; }
         public int? OrderId { get; private set; }
         public Order? Order { get; private set; }
         public bool IsAvailable { get; private set; }
@@ -20,8 +21,9 @@ namespace meat_console_API.Entities
 
         }
 
-        public Meat(MeatCut cut, decimal priceKg, decimal weightKg)
+        public Meat(int meatNumber, MeatCut cut, decimal priceKg, decimal weightKg)
         {
+            MeatNumber = meatNumber;
             IsAvailable = false;
             IsReserved = false;
             Cut = cut;

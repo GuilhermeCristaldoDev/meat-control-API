@@ -14,12 +14,12 @@ namespace meat_console_API.Repositories
             _context = context;
         }
 
-        public async Task<int> Create(Session session)
+        public async Task<int> Create(Session newSession)
         {
-            _context.Sessions.Add(session);
+            _context.Sessions.Add(newSession);
             await _context.SaveChangesAsync();
 
-            return session.Id;
+            return newSession.Id;
         }
 
         public async Task<IEnumerable<Session>> GetAll()
@@ -34,6 +34,14 @@ namespace meat_console_API.Repositories
             var session = await _context.Sessions.FirstOrDefaultAsync(s => s.IsActive == true);
 
             return session;
+        }
+
+        public async Task<int> Update(Session updatedSession)
+        {
+            _context.Sessions.Update(updatedSession);
+            await _context.SaveChangesAsync();
+
+            return updatedSession.Id;
         }
     }
 }
