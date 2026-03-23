@@ -37,6 +37,14 @@ namespace meat_console_API.Entities
             return Math.Round((PriceKg * WeightKg) - 10);
         }
 
+        public Meat SplitMeat()
+        {
+            WeightKg = WeightKg / 2;
+            TotalPrice = CalculateMeatPrice();
+
+            return new Meat(MeatNumber, Cut, PriceKg, WeightKg);
+        }
+
         public void ReserveMeat(string clientName)
         {
             ReservedBy = clientName;

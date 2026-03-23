@@ -1,6 +1,31 @@
-﻿namespace meat_console_API.Services
+﻿using meat_console_API.Entities;
+using meat_console_API.Repositories.Interfaces;
+using meat_console_API.Shared;
+
+namespace meat_console_API.Services
 {
-    public class SessionService
+    public class SessionService : ISessionService
     {
+        private readonly ISessionRepository _repo;
+
+        public SessionService(ISessionRepository repo)
+        {
+            _repo = repo;
+        }
+
+        public async Task<Result<int>> CreateSession()
+        {
+            Session? activeSession = await _repo.GetActiveSession();
+
+            if(activeSession is not null)
+            {
+                return Result<int>.Fail("Já existe uma sessão ativa!");
+            }
+
+            Session newSession = new();
+            await _repo.Create(newSession);
+            return Result<int>.Ok(newSession.Id);
+        }
+
     }
 }

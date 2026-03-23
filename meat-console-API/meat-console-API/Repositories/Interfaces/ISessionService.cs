@@ -1,6 +1,9 @@
-﻿namespace meat_console_API.Repositories.Interfaces
+﻿using meat_console_API.Shared;
+
+namespace meat_console_API.Repositories.Interfaces
 {
-    public class ISessionService
+    public interface ISessionService
     {
+        Task<Result<int>> CreateSession();
     }
 }

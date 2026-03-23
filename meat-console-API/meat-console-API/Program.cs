@@ -3,6 +3,7 @@ using meat_console_API.Repositories;
 using meat_console_API.Repositories.Interfaces;
 using meat_console_API.Services;
 using Microsoft.EntityFrameworkCore;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder();
 
@@ -21,6 +22,7 @@ var app = builder.Build();
 if(app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.MapScalarApiReference();
 }
 
 app.UseHttpsRedirection();
