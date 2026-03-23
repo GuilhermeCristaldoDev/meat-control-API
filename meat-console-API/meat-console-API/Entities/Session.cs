@@ -2,11 +2,11 @@
 {
     public class Session
     {
-        public int Id { get; private set; }
-        public DateTime CreatedAt { get; private set; }
-        public DateTime? ClosedAt { get; private set; }
-        public int MeatCount { get; private set; }
-        public bool IsActive { get; private set; }
+        public int Id { get;  private set; }
+        public DateTime CreatedAt { get;  private set; }
+        public DateTime? ClosedAt { get;  private set; }
+        public int MeatCount { get;  private set; }
+        public bool IsActive { get;  private set; }
 
         public Session()
         {

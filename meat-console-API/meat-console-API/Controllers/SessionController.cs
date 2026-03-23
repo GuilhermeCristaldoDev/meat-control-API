@@ -38,5 +38,13 @@ namespace meat_console_API.Controllers
             return NoContent();
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAllSessions()
+        {
+            var result = await _service.ListAllSessions();
+
+            return Ok(result.Data);
+        }
+
     }
 }

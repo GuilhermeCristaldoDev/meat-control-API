@@ -1,4 +1,5 @@
-﻿using meat_console_API.Shared;
+﻿using meat_console_API.DTOs;
+using meat_console_API.Shared;
 
 namespace meat_console_API.Services.Interfaces
 {
@@ -7,5 +8,7 @@ namespace meat_console_API.Services.Interfaces
         Task<Result<int>> CreateSession();
 
         Task<Result> CloseSession();
+
+        Task<Result<IEnumerable<GetSessionsResponseDto>>> ListAllSessions();
     }
 }
