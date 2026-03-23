@@ -1,5 +1,6 @@
 ﻿using meat_console_API.Entities;
 using meat_console_API.Repositories.Interfaces;
+using meat_console_API.Services.Interfaces;
 using meat_console_API.Shared;
 
 namespace meat_console_API.Services
@@ -17,7 +18,7 @@ namespace meat_console_API.Services
         {
             Session? activeSession = await _repo.GetActiveSession();
 
-            if(activeSession is not null)
+            if (activeSession is not null)
             {
                 return Result<int>.Fail("Já existe uma sessão ativa!");
             }
@@ -27,5 +28,18 @@ namespace meat_console_API.Services
             return Result<int>.Ok(newSession.Id);
         }
 
+        public async Task<Result> CloseSession()
+        {
+            Session? activeSession = await _repo.GetActiveSession();
+
+            if (activeSession is null)
+            {
+                return Result.Fail("Nenhuma sessão ativa!");
+            }
+
+            activeSession.CloseSession();
+            await _repo.Update(activeSession);
+            return Result.Ok();
+        }
     }
 }

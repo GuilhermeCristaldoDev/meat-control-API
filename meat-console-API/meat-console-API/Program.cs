@@ -2,6 +2,7 @@ using meat_console_API.Data;
 using meat_console_API.Repositories;
 using meat_console_API.Repositories.Interfaces;
 using meat_console_API.Services;
+using meat_console_API.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 

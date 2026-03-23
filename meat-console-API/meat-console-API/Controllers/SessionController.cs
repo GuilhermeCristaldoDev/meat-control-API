@@ -1,4 +1,4 @@
-﻿using meat_console_API.Repositories.Interfaces;
+﻿using meat_console_API.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace meat_console_API.Controllers
@@ -26,5 +26,17 @@ namespace meat_console_API.Controllers
 
             return Created($"/sessions/{result.Data}", result.Data);
         }
+
+        [HttpPut]
+        public async Task<IActionResult> CloseSession()
+        {
+            var result = await _service.CloseSession();
+
+            if(!result.Success) 
+                return Conflict(result.Error);
+
+            return NoContent();
+        }
+
     }
 }
