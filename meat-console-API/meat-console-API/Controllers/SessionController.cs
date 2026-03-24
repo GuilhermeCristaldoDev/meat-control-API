@@ -15,6 +15,8 @@ namespace meat_console_API.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
         public async Task<IActionResult> Create()
         {
             var result = await _service.CreateSession();
@@ -27,7 +29,9 @@ namespace meat_console_API.Controllers
             return Created($"/sessions/{result.Data}", result.Data);
         }
 
-        [HttpPut]
+        [HttpPatch("close")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType (StatusCodes.Status409Conflict)]
         public async Task<IActionResult> CloseSession()
         {
             var result = await _service.CloseSession();
@@ -39,6 +43,7 @@ namespace meat_console_API.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllSessions()
         {
             var result = await _service.ListAllSessions();

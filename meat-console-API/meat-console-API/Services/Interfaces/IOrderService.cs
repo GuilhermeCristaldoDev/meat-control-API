@@ -1,0 +1,10 @@
+﻿using meat_console_API.DTOs;
+using meat_console_API.Shared;
+
+namespace meat_console_API.Services.Interfaces
+{
+    public interface IOrderService
+    {
+        Task<Result<CreateOrderResponseDto>> CreateOrder();
+    }
+}

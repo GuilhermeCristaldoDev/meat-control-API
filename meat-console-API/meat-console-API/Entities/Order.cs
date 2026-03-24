@@ -9,8 +9,9 @@
         public DateTime CreatedAt { get; private set; }
         public DateTime? ClosedAt { get; private set; }
 
-        public Order()
+        public Order(int sessionId)
         {
+            SessionId = sessionId;
             IsActive = true;
             CreatedAt = DateTime.Now;
         }
