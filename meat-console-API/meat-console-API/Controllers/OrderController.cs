@@ -40,5 +40,14 @@ namespace meat_console_API.Controllers
 
             return NoContent();
         }
+
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> ListAllOrders()
+        {
+            var result = await _service.ListAllOrders();
+
+            return Ok(result.Data);
+        }
     }
 }

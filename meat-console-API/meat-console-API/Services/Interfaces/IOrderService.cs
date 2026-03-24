@@ -7,5 +7,6 @@ namespace meat_console_API.Services.Interfaces
     {
         Task<Result<CreateOrderResponseDto>> CreateOrder();
         Task<Result> CloseOrder();
+        Task<Result<IEnumerable<GetOrdersResponseDto>>> ListAllOrders();
     }
 }

@@ -44,5 +44,20 @@ namespace meat_console_API.Services
             await _orderRepo.Update(order);
             return Result.Ok();
         }
+
+        public async Task<Result<IEnumerable<GetOrdersResponseDto>>> ListAllOrders()
+        {
+            var orders = await _orderRepo.GetAll();
+
+            var ordersDto = orders.Select(o => new GetOrdersResponseDto
+            {
+                Id = o.Id,
+                IsActive = o.IsActive,
+                CreatedAt = o.CreatedAt,
+                ClosedAt = o.ClosedAt
+            });
+
+            return Result<IEnumerable<GetOrdersResponseDto>>.Ok(ordersDto);
+        }
     }
 }
