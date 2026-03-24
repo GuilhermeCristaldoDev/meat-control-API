@@ -9,6 +9,6 @@ namespace meat_console_API.Repositories.Interfaces
 
         Task<Session?> GetActiveSession();
 
-        Task<int> Update(Session updatedSession);
+        Task Update(Session updatedSession);
     }
 }

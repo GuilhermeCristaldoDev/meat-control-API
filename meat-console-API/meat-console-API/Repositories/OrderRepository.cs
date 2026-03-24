@@ -46,12 +46,17 @@ namespace meat_console_API.Repositories
             return order;
         }
 
-        public async Task<int> Update(Order updatedOrder)
+        public async Task<Order?> GetActiveOrder()
+        {
+            Order? order = await _context.Orders.FirstOrDefaultAsync(o => o.IsActive == true);
+
+            return order;
+        }
+
+        public async Task Update(Order updatedOrder)
         {
             _context.Orders.Update(updatedOrder);
             await _context.SaveChangesAsync();
-
-            return updatedOrder.Id;
         }
     }
 }

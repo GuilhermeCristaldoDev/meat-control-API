@@ -36,12 +36,10 @@ namespace meat_console_API.Repositories
             return session;
         }
 
-        public async Task<int> Update(Session updatedSession)
+        public async Task Update(Session updatedSession)
         {
             _context.Sessions.Update(updatedSession);
             await _context.SaveChangesAsync();
-
-            return updatedSession.Id;
         }
     }
 }

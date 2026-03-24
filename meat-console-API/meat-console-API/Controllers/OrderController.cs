@@ -16,7 +16,7 @@ namespace meat_console_API.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         public async Task<IActionResult> CreateOrder()
         {
@@ -26,7 +26,19 @@ namespace meat_console_API.Controllers
                 return Conflict(result.Error);
 
  
-            return Ok(result.Data);
+            return Created($"orders/{result.Data}", result.Data);
+        }
+
+        [HttpPatch("close")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> CloseOrder()
+        {
+            var result = await _service.CloseOrder();
+
+            if (!result.Success)
+                return Conflict(result.Error);
+
+            return NoContent();
         }
     }
 }

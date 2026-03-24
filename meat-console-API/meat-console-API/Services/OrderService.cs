@@ -32,5 +32,17 @@ namespace meat_console_API.Services
 
             return Result<CreateOrderResponseDto>.Ok(responseDto);
         }
+
+        public async Task<Result> CloseOrder()
+        {
+            Order? order = await _orderRepo.GetActiveOrder();
+
+            if (order is null)
+                return Result.Fail("Não há nenhuma venda aberta");
+
+            order.CloseOrder();
+            await _orderRepo.Update(order);
+            return Result.Ok();
+        }
     }
 }

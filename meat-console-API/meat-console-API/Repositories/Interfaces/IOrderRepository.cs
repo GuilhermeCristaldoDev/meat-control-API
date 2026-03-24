@@ -12,6 +12,8 @@ namespace meat_console_API.Repositories.Interfaces
 
         Task<Order?> GetById(int id);
 
-        Task<int> Update(Order updatedOrder);
+        Task<Order?> GetActiveOrder();
+
+        Task Update(Order updatedOrder);
     }
 }
