@@ -32,7 +32,7 @@ namespace meat_console_API.Services
             int meatCount = session.GetNextMeatNumber();
             decimal priceKg = MeatPricing.DefaultPrices[meatDto.Cut];
 
-            Meat meat = new (meatCount, meatDto.Cut, priceKg , meatDto.WeightKg);
+            Meat meat = new(meatCount, meatDto.Cut, priceKg, meatDto.WeightKg);
 
             await _meatRepo.Create(meat);
             return Result<CreateMeatResponseDto>.Ok(new CreateMeatResponseDto(meat.Id));
@@ -47,6 +47,26 @@ namespace meat_console_API.Services
 
             await _meatRepo.Delete(meat);
             return Result.Ok();
+        }
+
+        public async Task<Result<IEnumerable<GetMeatResponseDto>>> ListAllMeats()
+        {
+            var meats = await _meatRepo.GetAll();
+
+            var meatsDto = meats.Select(m => new GetMeatResponseDto
+            {
+                Id = m.Id,
+                MeatNumber = m.MeatNumber,
+                IsAvailable = m.IsAvailable,
+                OrderId = m.OrderId,
+                IsReserved = m.IsReserved,
+                Cut = m.Cut,
+                PriceKg = m.PriceKg,
+                WeightKg = m.WeightKg,
+                TotalPrice = m.TotalPrice
+            });
+
+            return Result<IEnumerable<GetMeatResponseDto>>.Ok(meatsDto);
         }
     }
 }
