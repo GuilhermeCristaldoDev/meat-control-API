@@ -1,0 +1,41 @@
+﻿using meat_console_API.DTOs;
+using meat_console_API.Repositories.Interfaces;
+using meat_console_API.Services.Interfaces;
+using meat_console_API.Shared;
+using meat_console_API.Entities;
+using meat_console_API.Pricing;
+using meat_console_API.Enums;
+
+namespace meat_console_API.Services
+{
+    public class MeatService : IMeatService
+    {
+        private readonly IMeatRepository _meatRepo;
+        private readonly ISessionRepository _sessionRepo;
+
+        public MeatService(IMeatRepository meatRepo, ISessionRepository sessionRepo)
+        {
+            _meatRepo = meatRepo;
+            _sessionRepo = sessionRepo;
+        }
+
+        public async Task<Result<CreateMeatResponseDto>> CreateMeat(CreateMeatRequestDto meatDto)
+        {
+            Session? session = await _sessionRepo.GetActiveSession();
+
+            if (session is null)
+                return Result<CreateMeatResponseDto>.Fail("Nenhuma sessão ativa, erro ao cadastrar carne");
+
+            if (!Enum.IsDefined(meatDto.Cut))
+                return Result<CreateMeatResponseDto>.Fail("Tipo de carne invalido");
+
+            int meatCount = session.GetNextMeatNumber();
+            decimal priceKg = MeatPricing.DefaultPrices[meatDto.Cut];
+
+            Meat meat = new (meatCount, meatDto.Cut, priceKg , meatDto.WeightKg);
+
+            await _meatRepo.Create(meat);
+            return Result<CreateMeatResponseDto>.Ok(new CreateMeatResponseDto(meat.Id));
+        }
+    }
+}

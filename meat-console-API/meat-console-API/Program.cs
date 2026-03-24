@@ -15,6 +15,8 @@ builder.Services.AddScoped<ISessionService, SessionService>();
 builder.Services.AddScoped<ISessionRepository, SessionRepository>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IMeatRepository, MeatRepository>();
+builder.Services.AddScoped<IMeatService, MeatService>();
 
 
 builder.Services.AddDbContext<AppDbContext>(options =>
