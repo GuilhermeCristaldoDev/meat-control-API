@@ -37,5 +37,16 @@ namespace meat_console_API.Services
             await _meatRepo.Create(meat);
             return Result<CreateMeatResponseDto>.Ok(new CreateMeatResponseDto(meat.Id));
         }
+
+        public async Task<Result> DeleteMeat(int meatId)
+        {
+            Meat? meat = await _meatRepo.GetById(meatId);
+
+            if (meat is null)
+                return Result.Fail("Essa carne não existe");
+
+            await _meatRepo.Delete(meat);
+            return Result.Ok();
+        }
     }
 }

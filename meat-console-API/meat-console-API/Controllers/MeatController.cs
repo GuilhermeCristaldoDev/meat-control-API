@@ -26,5 +26,18 @@ namespace meat_console_API.Controllers
 
             return Created($"meats/{result.Data}", result.Data);
         }
+
+        [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> DeleteMeat([FromQuery] int meatId)
+        {
+            var result = await _service.DeleteMeat(meatId);
+
+            if(!result.Success)
+                return NotFound(result.Error);
+
+            return Ok();
+        }
     }
 }
