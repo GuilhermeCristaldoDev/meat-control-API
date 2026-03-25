@@ -27,10 +27,10 @@ namespace meat_console_API.Entities
             Cut = cut;
             PriceKg = priceKg;
             WeightKg = weightKg;
-            TotalPrice = CalculateMeatPrice();
+            TotalPrice = CalculateTotalPrice();
         }
 
-        private decimal CalculateMeatPrice()
+        public decimal CalculateTotalPrice()
         {
             return Math.Round((PriceKg * WeightKg) - 10);
         }
@@ -38,7 +38,7 @@ namespace meat_console_API.Entities
         public Meat Split()
         {
             WeightKg = WeightKg / 2;
-            TotalPrice = CalculateMeatPrice();
+            TotalPrice = CalculateTotalPrice();
 
             return new Meat(MeatNumber, Cut, PriceKg, WeightKg);
         }
@@ -59,6 +59,17 @@ namespace meat_console_API.Entities
         {
             OrderId = null;
             Status = MeatStatus.Available;
+        }
+
+        public void EditWeightKg(decimal weightKg)
+        {
+            WeightKg = weightKg;
+            TotalPrice = CalculateTotalPrice();
+        }
+
+        public void EditCut(MeatCut newCut)
+        {
+            Cut = newCut;
         }
     }
 }

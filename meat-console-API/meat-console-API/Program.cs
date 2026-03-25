@@ -18,7 +18,6 @@ builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IMeatRepository, MeatRepository>();
 builder.Services.AddScoped<IMeatService, MeatService>();
 
-
 builder.Services.AddDbContext<AppDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 

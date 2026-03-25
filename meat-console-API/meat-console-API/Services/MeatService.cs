@@ -1,9 +1,11 @@
 ﻿using meat_console_API.DTOs;
 using meat_console_API.Entities;
+using meat_console_API.Enums;
 using meat_console_API.Pricing;
 using meat_console_API.Repositories.Interfaces;
 using meat_console_API.Services.Interfaces;
 using meat_console_API.Shared;
+using System.Reflection;
 
 namespace meat_console_API.Services
 {
@@ -121,7 +123,7 @@ namespace meat_console_API.Services
 
             Order? activeOrder = await _orderRepo.GetActiveOrder();
 
-            if(activeOrder is null)
+            if (activeOrder is null)
                 return Result.Fail("Nenhuma order ativa. Você não pode vender carnes!");
 
             Meat? meat = await _meatRepo.GetById(meatId);
@@ -133,6 +135,29 @@ namespace meat_console_API.Services
                 return Result.Fail("Essa carne já foi vendida");
 
             meat.Sell(activeOrder.Id);
+            await _meatRepo.Update(meat);
+            return Result.Ok();
+        }
+
+        public async Task<Result> EditMeat(UpdateMeatRequestDto meatDto, int meatId)
+        {
+            if (meatDto.Cut is null && meatDto.WeightKg is null)
+                return Result.Fail("Não é possivel editar com campos vazios");
+
+            Meat? meat = await _meatRepo.GetById(meatId);
+
+            if (meat is null)
+                return Result.Fail("Essa carne não existe");
+
+            if (meat.Status == MeatStatus.Sold)
+                return Result.Fail("Essa carne não pode ser editada");
+
+            if (meatDto.Cut is not null)
+                meat.EditCut(meatDto.Cut.Value);
+
+            if (meatDto.WeightKg is not null)
+                meat.EditWeightKg(meatDto.WeightKg.Value);
+
             await _meatRepo.Update(meat);
             return Result.Ok();
         }

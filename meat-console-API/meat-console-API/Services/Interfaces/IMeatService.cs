@@ -12,5 +12,6 @@ namespace meat_console_API.Services.Interfaces
         Task<Result<GetMeatResponseDto?>> GetMeatById(int meatId);
         Task<Result> ReserveMeat(int meatId, string clientName);
         Task<Result> SellMeat (int meatId);
+        Task<Result> EditMeat(UpdateMeatRequestDto meatDto, int meatId);
     }
 }

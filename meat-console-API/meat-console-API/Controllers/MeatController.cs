@@ -10,7 +10,7 @@ namespace meat_console_API.Controllers
     {
         private readonly IMeatService _service;
 
-        public MeatController (IMeatService service)
+        public MeatController(IMeatService service)
         {
             _service = service;
         }
@@ -34,7 +34,7 @@ namespace meat_console_API.Controllers
         {
             var result = await _service.DeleteMeat(meatId);
 
-            if(!result.Success)
+            if (!result.Success)
                 return NotFound(result.Error);
 
             return Ok();
@@ -69,7 +69,7 @@ namespace meat_console_API.Controllers
         {
             var result = await _service.ReserveMeat(meatId, clientName);
 
-            if(!result.Success)
+            if (!result.Success)
                 return Conflict(result.Error);
 
             return NoContent();
@@ -84,6 +84,19 @@ namespace meat_console_API.Controllers
 
             if (!result.Success)
                 return Conflict(result.Error);
+
+            return NoContent();
+        }
+
+        [HttpPut("{meatId}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> EditMeat(UpdateMeatRequestDto meatDto, int meatId)
+        {
+            var result = await _service.EditMeat(meatDto, meatId);
+
+            if (!result.Success)
+                return NotFound(result.Error);
 
             return NoContent();
         }
