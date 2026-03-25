@@ -48,5 +48,18 @@ namespace meat_console_API.Controllers
 
             return Ok(result.Data);
         }
+
+        [HttpGet("id")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetMeatById(int meatId)
+        {
+            var result = await _service.GetMeatById(meatId);
+
+            if (!result.Success)
+                return NotFound(result.Error);
+
+            return Ok(result.Data);
+        }
     }
 }

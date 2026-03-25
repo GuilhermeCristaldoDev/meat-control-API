@@ -68,5 +68,28 @@ namespace meat_console_API.Services
 
             return Result<IEnumerable<GetMeatResponseDto>>.Ok(meatsDto);
         }
+
+        public async Task<Result<GetMeatResponseDto?>> GetMeatById(int meatId)
+        {
+            Meat? meat = await _meatRepo.GetById(meatId);
+
+            if (meat is null)
+                return Result<GetMeatResponseDto?>.Fail("Essa carne não existe");
+
+            GetMeatResponseDto meatDto = new();
+
+            meatDto.Id = meat.Id;
+            meatDto.MeatNumber = meat.MeatNumber;
+            meatDto.OrderId = meat.OrderId;
+            meatDto.IsAvailable = meat.IsAvailable;
+            meatDto.IsReserved = meat.IsReserved;
+            meatDto.Cut = meat.Cut;
+            meatDto.PriceKg = meat.PriceKg;
+            meatDto.WeightKg = meat.WeightKg;
+            meatDto.TotalPrice = meat.TotalPrice;
+
+
+            return Result<GetMeatResponseDto?>.Ok(meatDto);
+        }
     }
 }
