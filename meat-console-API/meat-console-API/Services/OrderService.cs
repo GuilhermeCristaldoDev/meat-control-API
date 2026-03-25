@@ -82,5 +82,24 @@ namespace meat_console_API.Services
 
             return Result<IEnumerable<GetOrderResponseDto>>.Ok(ordersDto);
         }
+
+        public async Task<Result<GetOrderResponseDto?>> GetOrderById(int orderId)
+        {
+            Order? order = await _orderRepo.GetById(orderId);
+
+            if (order is null)
+                return Result<GetOrderResponseDto?>.Fail("Essa venda não existe");
+
+            var orderDto = new GetOrderResponseDto
+            {
+                Id = order.Id,
+                Status = order.Status,
+                CreatedAt = order.CreatedAt,
+                ClosedAt = order.ClosedAt,
+                TotalAmount = order.TotalAmount,
+            };
+
+            return Result<GetOrderResponseDto?>.Ok(orderDto);
+        }
     }
 }

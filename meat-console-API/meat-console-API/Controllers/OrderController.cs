@@ -25,7 +25,7 @@ namespace meat_console_API.Controllers
             if (!result.Success)
                 return Conflict(result.Error);
 
- 
+
             return Created($"orders/{result.Data}", result.Data);
         }
 
@@ -47,6 +47,19 @@ namespace meat_console_API.Controllers
         public async Task<IActionResult> ListAllOrders()
         {
             var result = await _service.ListAllOrders();
+
+            return Ok(result.Data);
+        }
+
+        [HttpGet("{orderId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetOrderById(int orderId)
+        {
+            var result = await _service.GetOrderById(orderId);
+
+            if (!result.Success)
+                return NotFound(result.Error);
 
             return Ok(result.Data);
         }
