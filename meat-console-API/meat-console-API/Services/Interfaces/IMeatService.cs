@@ -9,6 +9,7 @@ namespace meat_console_API.Services.Interfaces
         Task<Result<CreateMeatResponseDto>> CreateMeat(CreateMeatRequestDto meatDto);
         Task<Result> DeleteMeat(int meatId);
         Task<Result<IEnumerable<GetMeatResponseDto>>> ListAllMeats();
-        Task<Result<GetMeatResponseDto?>> GetMeatById(int meatId); 
+        Task<Result<GetMeatResponseDto?>> GetMeatById(int meatId);
+        Task<Result> ReserveMeat(int meatId, string clientName);
     }
 }

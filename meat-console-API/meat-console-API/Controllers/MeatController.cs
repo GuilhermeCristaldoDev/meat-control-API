@@ -49,7 +49,7 @@ namespace meat_console_API.Controllers
             return Ok(result.Data);
         }
 
-        [HttpGet("id")]
+        [HttpGet("{meatId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetMeatById(int meatId)
@@ -60,6 +60,19 @@ namespace meat_console_API.Controllers
                 return NotFound(result.Error);
 
             return Ok(result.Data);
+        }
+
+        [HttpPatch("{meatId}/reserve")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        public async Task<IActionResult> ReserveMeat(int meatId, string clientName)
+        {
+            var result = await _service.ReserveMeat(meatId, clientName);
+
+            if(!result.Success)
+                return Conflict(result.Error);
+
+            return NoContent();
         }
     }
 }

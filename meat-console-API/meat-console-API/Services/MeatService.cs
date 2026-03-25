@@ -1,11 +1,9 @@
 ﻿using meat_console_API.DTOs;
+using meat_console_API.Entities;
+using meat_console_API.Pricing;
 using meat_console_API.Repositories.Interfaces;
 using meat_console_API.Services.Interfaces;
 using meat_console_API.Shared;
-using meat_console_API.Entities;
-using meat_console_API.Pricing;
-using meat_console_API.Enums;
-using Microsoft.OpenApi;
 
 namespace meat_console_API.Services
 {
@@ -76,19 +74,40 @@ namespace meat_console_API.Services
             if (meat is null)
                 return Result<GetMeatResponseDto?>.Fail("Essa carne não existe");
 
-            GetMeatResponseDto meatDto = new();
-
-            meatDto.Id = meat.Id;
-            meatDto.MeatNumber = meat.MeatNumber;
-            meatDto.OrderId = meat.OrderId;
-            meatDto.Status = meat.Status;
-            meatDto.Cut = meat.Cut;
-            meatDto.PriceKg = meat.PriceKg;
-            meatDto.WeightKg = meat.WeightKg;
-            meatDto.TotalPrice = meat.TotalPrice;
+            GetMeatResponseDto meatDto = new()
+            {
+                Id = meat.Id,
+                MeatNumber = meat.MeatNumber,
+                OrderId = meat.OrderId,
+                Status = meat.Status,
+                Cut = meat.Cut,
+                PriceKg = meat.PriceKg,
+                WeightKg = meat.WeightKg,
+                TotalPrice = meat.TotalPrice
+            };
 
 
             return Result<GetMeatResponseDto?>.Ok(meatDto);
+        }
+
+        public async Task<Result> ReserveMeat(int meatId, string clientName)
+        {
+            Session? activeSession = await _sessionRepo.GetActiveSession();
+
+            if (activeSession is null)
+                return Result.Fail("Nenhuma sessão ativa. Você não pode reservar carnes!");
+
+            Meat? meat = await _meatRepo.GetById(meatId);
+
+            if (meat is null)
+                return Result.Fail("Essa carne não existe");
+
+            if (meat.Status != Enums.MeatStatus.Available)
+                return Result.Fail("Essa carne já foi reservada ou vendida");
+
+            meat.Reserve(clientName);
+            await _meatRepo.Update(meat);
+            return Result.Ok();
         }
     }
 }
