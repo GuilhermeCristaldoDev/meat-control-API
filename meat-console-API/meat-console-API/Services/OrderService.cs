@@ -27,7 +27,12 @@ namespace meat_console_API.Services
             if (sessionActive is null)
                 return Result<CreateOrderResponseDto>.Fail("Não há nenhuma sessão ativa");
 
-            Order order = new(sessionActive.Id);
+            Order? order = await _orderRepo.GetActiveOrder();
+
+            if (order is not null)
+                return Result<CreateOrderResponseDto>.Fail("Já existe uma venda ativa");
+
+            order = new(sessionActive.Id);
 
             await _orderRepo.Create(order);
 
