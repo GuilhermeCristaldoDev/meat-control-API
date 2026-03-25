@@ -114,6 +114,21 @@ namespace meat_console_API.Services
             return Result.Ok();
         }
 
+        public async Task<Result> UnreserveMeat(int meatId)
+        {
+            Meat? meat = await _meatRepo.GetById(meatId);
+
+            if (meat is null)
+                return Result.Fail("Essa carne n existe");
+
+            if (meat.Status != MeatStatus.Reserved)
+                return Result.Fail("Essa carne não foi reservada");
+
+            meat.Unreserve();
+            await _meatRepo.Update(meat);
+            return Result.Ok();
+        }
+
         public async Task<Result> SellMeat(int meatId)
         {
             Session? activeSession = await _sessionRepo.GetActiveSession();

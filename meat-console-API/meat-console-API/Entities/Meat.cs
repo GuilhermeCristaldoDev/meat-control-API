@@ -61,6 +61,12 @@ namespace meat_console_API.Entities
             Status = MeatStatus.Available;
         }
 
+        public void Unreserve()
+        {
+            Status = MeatStatus.Available;
+            ReservedBy = null;
+        }
+
         public void EditWeightKg(decimal weightKg)
         {
             WeightKg = weightKg;

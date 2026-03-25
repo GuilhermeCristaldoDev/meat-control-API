@@ -75,6 +75,19 @@ namespace meat_console_API.Controllers
             return NoContent();
         }
 
+        [HttpPatch("{meatId}/unreserve")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        public async Task<IActionResult> UnreserveMeat(int meatId)
+        {
+            var result = await _service.UnreserveMeat(meatId);
+
+            if (!result.Success)
+                return Conflict(result.Error);
+
+            return NoContent();
+        }
+
         [HttpPatch("{meatId}/sell")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]

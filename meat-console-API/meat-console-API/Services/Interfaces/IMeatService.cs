@@ -11,7 +11,9 @@ namespace meat_console_API.Services.Interfaces
         Task<Result<IEnumerable<GetMeatResponseDto>>> ListAllMeats();
         Task<Result<GetMeatResponseDto?>> GetMeatById(int meatId);
         Task<Result> ReserveMeat(int meatId, string clientName);
+        Task<Result> UnreserveMeat(int meatId);
         Task<Result> SellMeat (int meatId);
         Task<Result> EditMeat(UpdateMeatRequestDto meatDto, int meatId);
+       
     }
 }
