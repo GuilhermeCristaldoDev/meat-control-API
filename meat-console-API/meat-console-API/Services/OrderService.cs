@@ -3,6 +3,7 @@ using meat_console_API.Repositories.Interfaces;
 using meat_console_API.Services.Interfaces;
 using meat_console_API.Entities;
 using meat_console_API.Shared;
+using meat_console_API.Enums;
 
 namespace meat_console_API.Services
 {
@@ -48,7 +49,12 @@ namespace meat_console_API.Services
             if (order is null)
                 return Result<CloseOrderResponseDto>.Fail("Não há nenhuma venda aberta");
 
-            
+            foreach (Meat m in order.Meats)
+            {
+                m.Sell();
+                await _meatRepo.Update(m);
+            }
+
             order.Close();
             await _orderRepo.Update(order);
 
@@ -108,6 +114,27 @@ namespace meat_console_API.Services
             };
 
             return Result<GetOrderResponseDto?>.Ok(orderDto);
+        }
+
+        public async Task<Result<int>> AddMeatToOrder(int meatId)
+        {
+            Order? order = await _orderRepo.GetActiveOrder();
+
+            if (order is null)
+                return Result<int>.Fail("Não existem uma venda ativa");
+
+            Meat? meat = await _meatRepo.GetById(meatId);
+
+            if (meat is null)
+                return Result<int>.Fail("Essa carne não existe");
+
+            if (meat.Status != MeatStatus.Available && meat.Status != MeatStatus.Reserved)
+                return Result<int>.Fail("Essa carne não está disponivel");
+
+            meat.AddMeatToOrder(order.Id);
+            await _meatRepo.Update(meat);
+
+            return Result<int>.Ok(order.Id);
         }
 
         public async Task<Result> CancelOrder()

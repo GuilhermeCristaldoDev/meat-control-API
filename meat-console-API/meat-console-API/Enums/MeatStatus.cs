@@ -3,6 +3,7 @@
     public enum MeatStatus
     {
         Available,
+        InOrder,
         Reserved,
         Sold
 

@@ -88,19 +88,6 @@ namespace meat_console_API.Controllers
             return NoContent();
         }
 
-        [HttpPatch("{meatId}/sell")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status409Conflict)]
-        public async Task<IActionResult> SellMeat(int meatId)
-        {
-            var result = await _service.SellMeat(meatId);
-
-            if (!result.Success)
-                return Conflict(result.Error);
-
-            return NoContent();
-        }
-
         [HttpPut("{meatId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

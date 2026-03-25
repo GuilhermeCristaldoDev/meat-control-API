@@ -129,31 +129,6 @@ namespace meat_console_API.Services
             return Result.Ok();
         }
 
-        public async Task<Result> SellMeat(int meatId)
-        {
-            Session? activeSession = await _sessionRepo.GetActiveSession();
-
-            if (activeSession is null)
-                return Result.Fail("Nenhuma sessão ativa. Você não pode reservar carnes!");
-
-            Order? activeOrder = await _orderRepo.GetActiveOrder();
-
-            if (activeOrder is null)
-                return Result.Fail("Nenhuma order ativa. Você não pode vender carnes!");
-
-            Meat? meat = await _meatRepo.GetById(meatId);
-
-            if (meat is null)
-                return Result.Fail("Essa carne não existe");
-
-            if (meat.Status == Enums.MeatStatus.Sold)
-                return Result.Fail("Essa carne já foi vendida");
-
-            meat.Sell(activeOrder.Id);
-            await _meatRepo.Update(meat);
-            return Result.Ok();
-        }
-
         public async Task<Result> EditMeat(UpdateMeatRequestDto meatDto, int meatId)
         {
             if (meatDto.Cut is null && meatDto.WeightKg is null)

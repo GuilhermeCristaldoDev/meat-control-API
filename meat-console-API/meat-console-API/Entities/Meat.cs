@@ -49,9 +49,8 @@ namespace meat_console_API.Entities
             Status = MeatStatus.Reserved;
         }
 
-        public void Sell(int orderId)
+        public void Sell()
         {
-            OrderId = orderId;
             Status = MeatStatus.Sold;
         }
 
@@ -65,6 +64,12 @@ namespace meat_console_API.Entities
         {
             Status = MeatStatus.Available;
             ReservedBy = null;
+        }
+
+        public void AddMeatToOrder(int orderId)
+        {
+            OrderId = orderId;
+            Status = MeatStatus.InOrder;
         }
 
         public void EditWeightKg(decimal weightKg)

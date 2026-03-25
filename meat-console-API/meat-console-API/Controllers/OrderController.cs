@@ -51,6 +51,18 @@ namespace meat_console_API.Controllers
             return Ok(result.Data);
         }
 
+        [HttpPatch("meats/{meatId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        public async Task<IActionResult> AddMeatToOrder(int meatId)
+        {
+            var result = await _service.AddMeatToOrder(meatId);
+
+            if(!result.Success) return Conflict(result.Error);
+
+            return Ok(result.Data);
+        }
+
         [HttpGet("{orderId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
