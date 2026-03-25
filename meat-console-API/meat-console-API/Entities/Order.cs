@@ -8,6 +8,7 @@
         public bool IsActive { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public DateTime? ClosedAt { get; private set; }
+        public decimal TotalAmount { get; private set; }
 
         public Order(int sessionId)
         {
@@ -16,10 +17,11 @@
             CreatedAt = DateTime.Now;
         }
 
-        public void CloseOrder()
+        public void CloseOrder(decimal totalAmount)
         {
             ClosedAt = DateTime.Now;
             IsActive = false;
+            TotalAmount = totalAmount;
         }
     }
 }

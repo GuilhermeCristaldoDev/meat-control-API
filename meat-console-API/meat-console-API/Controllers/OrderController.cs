@@ -30,7 +30,8 @@ namespace meat_console_API.Controllers
         }
 
         [HttpPatch("close")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
         public async Task<IActionResult> CloseOrder()
         {
             var result = await _service.CloseOrder();
@@ -38,7 +39,7 @@ namespace meat_console_API.Controllers
             if (!result.Success)
                 return Conflict(result.Error);
 
-            return NoContent();
+            return Ok(result.Data);
         }
 
         [HttpGet]

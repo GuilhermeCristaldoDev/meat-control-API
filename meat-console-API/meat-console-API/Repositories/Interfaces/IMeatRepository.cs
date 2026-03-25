@@ -9,6 +9,7 @@ namespace meat_console_API.Repositories.Interfaces
         Task<int> Delete(Meat meat);
 
         Task<IEnumerable<Meat>> GetAll();
+        Task<IEnumerable<Meat>> GetMeatsByOrderId(int orderId);
 
         Task<Meat?> GetById(int id);
 

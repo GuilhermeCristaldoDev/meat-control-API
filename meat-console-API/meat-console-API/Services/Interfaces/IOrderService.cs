@@ -6,7 +6,7 @@ namespace meat_console_API.Services.Interfaces
     public interface IOrderService
     {
         Task<Result<CreateOrderResponseDto>> CreateOrder();
-        Task<Result> CloseOrder();
-        Task<Result<IEnumerable<GetOrdersResponseDto>>> ListAllOrders();
+        Task<Result<GetOrderResponseDto>> CloseOrder();
+        Task<Result<IEnumerable<GetOrderResponseDto>>> ListAllOrders();
     }
 }

@@ -36,6 +36,11 @@ namespace meat_console_API.Repositories
 
         }
 
+        public async Task<IEnumerable<Meat>> GetMeatsByOrderId(int orderId)
+        {
+            return await _context.Meats.Where(m => m.OrderId == orderId).ToListAsync();
+        }
+
         public async Task<Meat?> GetById(int id)
         {
             return await _context.Meats.FindAsync(id);

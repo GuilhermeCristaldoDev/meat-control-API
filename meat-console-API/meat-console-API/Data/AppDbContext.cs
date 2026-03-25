@@ -19,6 +19,11 @@ namespace meat_console_API.Data
                 entity.Property(m => m.TotalPrice).HasPrecision(10, 2);
                 }
             );
+
+            modelBuilder.Entity<Order>(entity =>
+            {
+                entity.Property(o => o.TotalAmount).HasPrecision(10, 2);
+            });
            
         }
     }
