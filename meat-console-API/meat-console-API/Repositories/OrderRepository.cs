@@ -48,7 +48,7 @@ namespace meat_console_API.Repositories
 
         public async Task<Order?> GetActiveOrder()
         {
-            Order? order = await _context.Orders.FirstOrDefaultAsync(o => o.IsActive == true);
+            Order? order = await _context.Orders.FirstOrDefaultAsync(o => o.Status == Enums.OrderStatus.Open);
 
             return order;
         }

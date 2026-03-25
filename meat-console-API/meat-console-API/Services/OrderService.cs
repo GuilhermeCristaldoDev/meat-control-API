@@ -47,13 +47,13 @@ namespace meat_console_API.Services
 
             decimal totalAmount = meats.Sum(m => m.TotalPrice);
 
-            order.CloseOrder(totalAmount);
+            order.Close(totalAmount);
             await _orderRepo.Update(order);
 
             var orderDto = new GetOrderResponseDto
             {
                 Id = order.Id,
-                IsActive = order.IsActive,
+                Status = order.Status,
                 CreatedAt = order.CreatedAt,
                 ClosedAt = order.ClosedAt,
                 TotalAmount = order.TotalAmount,
@@ -69,7 +69,7 @@ namespace meat_console_API.Services
             var ordersDto = orders.Select(o => new GetOrderResponseDto
             {
                 Id = o.Id,
-                IsActive = o.IsActive,
+                Status = o.Status,
                 CreatedAt = o.CreatedAt,
                 ClosedAt = o.ClosedAt,
                 TotalAmount = o.TotalAmount,
