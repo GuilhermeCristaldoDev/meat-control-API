@@ -8,8 +8,7 @@ namespace meat_console_API.Entities
         public int MeatNumber { get; private set; }
         public int? OrderId { get; private set; }
         public Order? Order { get; private set; }
-        public bool IsAvailable { get; private set; }
-        public bool IsReserved { get; private set; }
+        public MeatStatus Status { get; private set; }
         public string? ReservedBy { get; private set; }
         public MeatCut Cut { get; private set; }
         public decimal PriceKg { get; private set; }
@@ -24,8 +23,7 @@ namespace meat_console_API.Entities
         public Meat(int meatNumber, MeatCut cut, decimal priceKg, decimal weightKg)
         {
             MeatNumber = meatNumber;
-            IsAvailable = false;
-            IsReserved = false;
+            Status = MeatStatus.Available;
             Cut = cut;
             PriceKg = priceKg;
             WeightKg = weightKg;
@@ -37,7 +35,7 @@ namespace meat_console_API.Entities
             return Math.Round((PriceKg * WeightKg) - 10);
         }
 
-        public Meat SplitMeat()
+        public Meat Split()
         {
             WeightKg = WeightKg / 2;
             TotalPrice = CalculateMeatPrice();
@@ -45,11 +43,16 @@ namespace meat_console_API.Entities
             return new Meat(MeatNumber, Cut, PriceKg, WeightKg);
         }
 
-        public void ReserveMeat(string clientName)
+        public void Reserve(string clientName)
         {
             ReservedBy = clientName;
-            IsReserved = true;
-            IsAvailable = false;
+            Status = MeatStatus.Reserved;
+        }
+
+        public void Sell(int orderId)
+        {
+            OrderId = orderId;
+            Status = MeatStatus.Sold;
         }
     }
 }

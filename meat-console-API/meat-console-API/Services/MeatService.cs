@@ -5,6 +5,7 @@ using meat_console_API.Shared;
 using meat_console_API.Entities;
 using meat_console_API.Pricing;
 using meat_console_API.Enums;
+using Microsoft.OpenApi;
 
 namespace meat_console_API.Services
 {
@@ -57,9 +58,8 @@ namespace meat_console_API.Services
             {
                 Id = m.Id,
                 MeatNumber = m.MeatNumber,
-                IsAvailable = m.IsAvailable,
-                OrderId = m.OrderId,
-                IsReserved = m.IsReserved,
+                Status = m.Status,
+                OrderId = m.OrderId,    
                 Cut = m.Cut,
                 PriceKg = m.PriceKg,
                 WeightKg = m.WeightKg,
@@ -81,8 +81,7 @@ namespace meat_console_API.Services
             meatDto.Id = meat.Id;
             meatDto.MeatNumber = meat.MeatNumber;
             meatDto.OrderId = meat.OrderId;
-            meatDto.IsAvailable = meat.IsAvailable;
-            meatDto.IsReserved = meat.IsReserved;
+            meatDto.Status = meat.Status;
             meatDto.Cut = meat.Cut;
             meatDto.PriceKg = meat.PriceKg;
             meatDto.WeightKg = meat.WeightKg;
