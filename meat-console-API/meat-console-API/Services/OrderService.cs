@@ -41,30 +41,38 @@ namespace meat_console_API.Services
             return Result<CreateOrderResponseDto>.Ok(responseDto);
         }
 
-        public async Task<Result<GetOrderResponseDto>> CloseOrder()
+        public async Task<Result<CloseOrderResponseDto>> CloseOrder()
         {
-            Order? order = await _orderRepo.GetActiveOrder();
+            Order? order = await _orderRepo.GetActiveOrderWithMeats();
 
             if (order is null)
-                return Result<GetOrderResponseDto>.Fail("Não há nenhuma venda aberta");
+                return Result<CloseOrderResponseDto>.Fail("Não há nenhuma venda aberta");
 
-            IEnumerable<Meat> meats = await _meatRepo.GetMeatsByOrderId(order.Id);
-
-            decimal totalAmount = meats.Sum(m => m.TotalPrice);
-
-            order.Close(totalAmount);
+            
+            order.Close();
             await _orderRepo.Update(order);
 
-            var orderDto = new GetOrderResponseDto
+            var orderDto = new CloseOrderResponseDto
             {
                 Id = order.Id,
                 Status = order.Status,
                 CreatedAt = order.CreatedAt,
                 ClosedAt = order.ClosedAt,
                 TotalAmount = order.TotalAmount,
+                Meats = [.. order.Meats.Select(m => new GetMeatResponseDto
+                {
+                    Id = m.Id,
+                    MeatNumber = m.MeatNumber,
+                    OrderId = m.OrderId,
+                    Status = m.Status,
+                    Cut = m.Cut,
+                    PriceKg = m.PriceKg,
+                    WeightKg = m.WeightKg,
+                    TotalPrice = m.TotalPrice,
+                })],
             };
 
-            return Result<GetOrderResponseDto>.Ok(orderDto);
+            return Result<CloseOrderResponseDto>.Ok(orderDto);
         }
 
         public async Task<Result<IEnumerable<GetOrderResponseDto>>> ListAllOrders()

@@ -17,7 +17,7 @@ namespace meat_console_API.Repositories
         public async Task<int> Create(Order newOrder)
         {
             _context.Orders.Add(newOrder);
-            
+
             await _context.SaveChangesAsync();
 
             return newOrder.Id;
@@ -49,6 +49,15 @@ namespace meat_console_API.Repositories
         public async Task<Order?> GetActiveOrder()
         {
             Order? order = await _context.Orders.FirstOrDefaultAsync(o => o.Status == Enums.OrderStatus.Open);
+
+            return order;
+        }
+
+        public async Task<Order?> GetActiveOrderWithMeats()
+        {
+            Order? order = await _context.Orders
+                .Include(o => o.Meats)
+                .FirstOrDefaultAsync(o => o.Status == Enums.OrderStatus.Open);
 
             return order;
         }
