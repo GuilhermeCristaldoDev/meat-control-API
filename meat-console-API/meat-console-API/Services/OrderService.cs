@@ -101,5 +101,25 @@ namespace meat_console_API.Services
 
             return Result<GetOrderResponseDto?>.Ok(orderDto);
         }
+
+        public async Task<Result> CancelOrder()
+        {
+            Order? order = await _orderRepo.GetActiveOrder();
+
+            if (order is null)
+                return Result.Fail("Nenhuma venda aberta");
+
+            var meats = await _meatRepo.GetMeatsByOrderId(order.Id);
+
+            foreach (var meat in meats)
+            {
+                meat.Release();
+                await _meatRepo.Update(meat);
+            }
+
+            order.Cancel();
+            await _orderRepo.Update(order);
+            return Result.Ok();
+        }
     }
 }

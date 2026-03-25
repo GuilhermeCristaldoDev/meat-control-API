@@ -25,5 +25,11 @@ namespace meat_console_API.Entities
             Status = OrderStatus.Closed;
             TotalAmount = totalAmount;
         }
+
+        public void Cancel()
+        {
+            ClosedAt = DateTime.Now;
+            Status = OrderStatus.Canceled;
+        }
     }
 }

@@ -54,5 +54,11 @@ namespace meat_console_API.Entities
             OrderId = orderId;
             Status = MeatStatus.Sold;
         }
+
+        public void Release()
+        {
+            OrderId = null;
+            Status = MeatStatus.Available;
+        }
     }
 }

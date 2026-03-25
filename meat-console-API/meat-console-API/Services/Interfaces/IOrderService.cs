@@ -9,5 +9,6 @@ namespace meat_console_API.Services.Interfaces
         Task<Result<GetOrderResponseDto>> CloseOrder();
         Task<Result<IEnumerable<GetOrderResponseDto>>> ListAllOrders();
         Task<Result<GetOrderResponseDto?>> GetOrderById(int orderId);
+        Task<Result> CancelOrder();
     }
 }

@@ -63,5 +63,18 @@ namespace meat_console_API.Controllers
 
             return Ok(result.Data);
         }
+
+        [HttpPatch("cancel")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> CancelOrder()
+        {
+            var result = await _service.CancelOrder();
+
+            if (!result.Success)
+                return NotFound(result.Error);
+
+            return NoContent();
+        }
     }
 }
