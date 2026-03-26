@@ -58,6 +58,8 @@ namespace meat_console_API.Entities
         {
             OrderId = null;
             Status = MeatStatus.Available;
+            ReservedBy = null;
+            
         }
 
         public void Unreserve()

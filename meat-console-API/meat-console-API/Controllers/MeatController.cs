@@ -27,10 +27,10 @@ namespace meat_console_API.Controllers
             return Created($"meats/{result.Data}", result.Data);
         }
 
-        [HttpDelete]
+        [HttpDelete("{meatId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeleteMeat([FromQuery] int meatId)
+        public async Task<IActionResult> DeleteMeat(int meatId)
         {
             var result = await _service.DeleteMeat(meatId);
 
@@ -62,7 +62,7 @@ namespace meat_console_API.Controllers
             return Ok(result.Data);
         }
 
-        [HttpPatch("{meatId}/reserve")]
+        [HttpPost("{meatId}/reserve")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         public async Task<IActionResult> ReserveMeat(int meatId, string clientName)

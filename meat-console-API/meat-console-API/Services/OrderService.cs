@@ -4,6 +4,7 @@ using meat_console_API.Services.Interfaces;
 using meat_console_API.Entities;
 using meat_console_API.Shared;
 using meat_console_API.Enums;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace meat_console_API.Services
 {
@@ -134,6 +135,23 @@ namespace meat_console_API.Services
             meat.AddMeatToOrder(order.Id);
             await _meatRepo.Update(meat);
 
+            return Result<int>.Ok(order.Id);
+        }
+
+        public async Task<Result<int>> RemoveMeatFromOrder(int meatId)
+        {
+            Order? order = await _orderRepo.GetActiveOrderWithMeats();
+
+            if (order is null)
+                return Result<int>.Fail("Nenhuma venda aberta");
+
+            Meat? meat = order.Meats.FirstOrDefault(m => m.Id == meatId);
+
+            if (meat is null)
+                return Result<int>.Fail("Essa carne não está na venda");
+
+            meat.Release();
+            await _meatRepo.Update(meat);
             return Result<int>.Ok(order.Id);
         }
 
