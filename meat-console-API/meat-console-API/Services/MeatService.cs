@@ -151,5 +151,21 @@ namespace meat_console_API.Services
             await _meatRepo.Update(meat);
             return Result.Ok();
         }
+
+        public async Task<Result> SplitMeat(int meatId)
+        {
+            Meat? meat = await _meatRepo.GetById(meatId);
+
+            if (meat is null)
+                return Result.Fail("Essa carne não existe");
+
+            if (meat.Status != MeatStatus.Available)
+                return Result.Fail("Essa carne não pode ser dividida");
+
+            Meat splitedMeat = meat.Split();
+            await _meatRepo.Update(meat);
+            await _meatRepo.Create(splitedMeat);
+            return Result.Ok();
+        }
     }
 }

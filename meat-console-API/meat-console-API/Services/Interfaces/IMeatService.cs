@@ -13,6 +13,7 @@ namespace meat_console_API.Services.Interfaces
         Task<Result> ReserveMeat(int meatId, string clientName);
         Task<Result> UnreserveMeat(int meatId);
         Task<Result> EditMeat(UpdateMeatRequestDto meatDto, int meatId);
+        Task<Result> SplitMeat(int meatId);
        
     }
 }

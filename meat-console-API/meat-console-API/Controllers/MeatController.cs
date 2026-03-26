@@ -100,5 +100,17 @@ namespace meat_console_API.Controllers
 
             return NoContent();
         }
+
+        [HttpPatch("meats/{meatId}/split")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        public async Task<IActionResult> SplitMeat(int meatId)
+        {
+            var result = await _service.SplitMeat(meatId);
+
+            if (!result.Success) return Conflict(result.Error);
+
+            return NoContent();
+        }
     }
 }
