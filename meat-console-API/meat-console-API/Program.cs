@@ -28,11 +28,14 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+using (var scope = app.Services.CreateScope())
 {
-    app.MapOpenApi();
-    app.MapScalarApiReference();
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate();
 }
+
+    app.MapOpenApi();
+app.MapScalarApiReference();
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
