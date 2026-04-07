@@ -1,8 +1,8 @@
-﻿using meat_console_API.Services.Interfaces;
+﻿using meat_control_API.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace meat_console_API.Controllers
+namespace meat_control_API.Controllers
 {
     [Route("[controller]")]
     [ApiController]

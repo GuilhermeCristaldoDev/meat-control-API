@@ -1,9 +1,10 @@
-﻿using meat_console_API.Repositories.Interfaces;
-using meat_console_API.Entities;
-using meat_console_API.Data;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using meat_control_API.Entities;
+using meat_control_API.Enums;
+using meat_control_API.Data;
+using meat_control_API.Repositories.Interfaces;
 
-namespace meat_console_API.Repositories
+namespace meat_control_API.Repositories
 {
     public class OrderRepository : IOrderRepository
     {
@@ -48,7 +49,7 @@ namespace meat_console_API.Repositories
 
         public async Task<Order?> GetActiveOrder()
         {
-            Order? order = await _context.Orders.FirstOrDefaultAsync(o => o.Status == Enums.OrderStatus.Open);
+            Order? order = await _context.Orders.FirstOrDefaultAsync(o => o.Status == OrderStatus.Open);
 
             return order;
         }
@@ -57,7 +58,7 @@ namespace meat_console_API.Repositories
         {
             Order? order = await _context.Orders
                 .Include(o => o.Meats)
-                .FirstOrDefaultAsync(o => o.Status == Enums.OrderStatus.Open);
+                .FirstOrDefaultAsync(o => o.Status == OrderStatus.Open);
 
             return order;
         }

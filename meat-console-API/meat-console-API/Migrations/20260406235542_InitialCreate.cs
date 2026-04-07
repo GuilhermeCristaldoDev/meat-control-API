@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace meat_console_API.Migrations
+namespace meat_control_API.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration
@@ -19,6 +19,7 @@ namespace meat_console_API.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ClosedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    MeatCount = table.Column<int>(type: "int", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -33,9 +34,10 @@ namespace meat_console_API.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     SessionId = table.Column<int>(type: "int", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ClosedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    ClosedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    TotalAmount = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -54,9 +56,10 @@ namespace meat_console_API.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    MeatNumber = table.Column<int>(type: "int", nullable: false),
                     OrderId = table.Column<int>(type: "int", nullable: true),
-                    IsAvailable = table.Column<bool>(type: "bit", nullable: false),
-                    IsReserved = table.Column<bool>(type: "bit", nullable: false),
+                    SessionId = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
                     ReservedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Cut = table.Column<int>(type: "int", nullable: false),
                     PriceKg = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
@@ -71,12 +74,23 @@ namespace meat_console_API.Migrations
                         column: x => x.OrderId,
                         principalTable: "Orders",
                         principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Meats_Sessions_SessionId",
+                        column: x => x.SessionId,
+                        principalTable: "Sessions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Meats_OrderId",
                 table: "Meats",
                 column: "OrderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Meats_SessionId",
+                table: "Meats",
+                column: "SessionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_SessionId",

@@ -1,6 +1,6 @@
-﻿using meat_console_API.Entities;
+﻿using meat_control_API.Entities;
 
-namespace meat_console_API.Repositories.Interfaces
+namespace meat_control_API.Repositories.Interfaces
 {
     public interface IOrderRepository
     {

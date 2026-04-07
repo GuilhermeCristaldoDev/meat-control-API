@@ -1,4 +1,4 @@
-﻿namespace meat_console_API.DTOs
+﻿namespace meat_control_API.DTOs
 {
     public class CreateMeatResponseDto(int id)
     {

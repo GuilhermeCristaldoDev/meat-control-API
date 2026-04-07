@@ -1,4 +1,4 @@
-﻿namespace meat_console_API.Enums
+﻿namespace meat_control_API.Enums
 {
     public enum MeatCut
     {

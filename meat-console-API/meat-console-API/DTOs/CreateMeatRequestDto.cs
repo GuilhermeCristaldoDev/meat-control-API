@@ -1,4 +1,4 @@
-﻿using meat_console_API.Enums;
+﻿using meat_control_API.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace meat_console_API.DTOs

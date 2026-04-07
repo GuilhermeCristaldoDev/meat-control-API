@@ -1,7 +1,7 @@
-﻿using meat_console_API.DTOs;
-using meat_console_API.Shared;
+﻿using meat_control_API.DTOs;
+using meat_control_API.Shared;
 
-namespace meat_console_API.Services.Interfaces
+namespace meat_control_API.Services.Interfaces
 {
     public interface ISessionService
     {

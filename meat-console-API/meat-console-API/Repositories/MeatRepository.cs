@@ -1,9 +1,9 @@
-﻿using meat_console_API.Data;
-using meat_console_API.Entities;
-using meat_console_API.Repositories.Interfaces;
+﻿using meat_control_API.Data;
+using meat_control_API.Entities;
+using meat_control_API.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace meat_console_API.Repositories
+namespace meat_control_API.Repositories
 {
     public class MeatRepository : IMeatRepository
     {

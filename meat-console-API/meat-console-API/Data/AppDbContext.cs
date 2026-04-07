@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using meat_console_API.Entities;
+using meat_control_API.Entities;
 
-namespace meat_console_API.Data
+namespace meat_control_API.Data
 {
     public class AppDbContext : DbContext
     {

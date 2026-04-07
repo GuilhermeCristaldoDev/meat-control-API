@@ -1,4 +1,4 @@
-﻿namespace meat_console_API.Shared
+﻿namespace meat_control_API.Shared
 {
     public class Result<T>
     {

@@ -1,8 +1,9 @@
-using meat_console_API.Data;
-using meat_console_API.Repositories;
-using meat_console_API.Repositories.Interfaces;
 using meat_console_API.Services;
-using meat_console_API.Services.Interfaces;
+using meat_control_API.Data;
+using meat_control_API.Repositories;
+using meat_control_API.Repositories.Interfaces;
+using meat_control_API.Services;
+using meat_control_API.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 using System.Text.Json.Serialization;

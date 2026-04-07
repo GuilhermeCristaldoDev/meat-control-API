@@ -1,13 +1,14 @@
 ﻿using meat_console_API.DTOs;
-using meat_console_API.Entities;
-using meat_console_API.Enums;
-using meat_console_API.Pricing;
-using meat_console_API.Repositories.Interfaces;
-using meat_console_API.Services.Interfaces;
-using meat_console_API.Shared;
+using meat_control_API.DTOs;
+using meat_control_API.Entities;
+using meat_control_API.Enums;
+using meat_control_API.Pricing;
+using meat_control_API.Repositories.Interfaces;
+using meat_control_API.Services.Interfaces;
+using meat_control_API.Shared;
 using System.Reflection;
 
-namespace meat_console_API.Services
+namespace meat_control_API.Services
 {
     public class MeatService : IMeatService
     {
@@ -35,7 +36,7 @@ namespace meat_console_API.Services
             int meatCount = session.GetNextMeatNumber();
             decimal priceKg = MeatPricing.DefaultPrices[meatDto.Cut];
 
-            Meat meat = new(meatCount, meatDto.Cut, priceKg, meatDto.WeightKg);
+            Meat meat = new(meatCount, meatDto.Cut, priceKg, meatDto.WeightKg, session.Id);
 
             await _meatRepo.Create(meat);
             return Result<CreateMeatResponseDto>.Ok(new CreateMeatResponseDto(meat.Id));
@@ -106,7 +107,7 @@ namespace meat_console_API.Services
             if (meat is null)
                 return Result.Fail("Essa carne não existe");
 
-            if (meat.Status != Enums.MeatStatus.Available)
+            if (meat.Status != MeatStatus.Available)
                 return Result.Fail("Essa carne já foi reservada ou vendida");
 
             meat.Reserve(clientName);

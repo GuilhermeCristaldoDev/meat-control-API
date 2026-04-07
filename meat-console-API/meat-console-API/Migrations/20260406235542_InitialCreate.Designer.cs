@@ -5,15 +5,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using meat_console_API.Data;
+using meat_control_API.Data;
 
 #nullable disable
 
-namespace meat_console_API.Migrations
+namespace meat_control_API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260326003954_AddInOrderMeatStatus")]
-    partial class AddInOrderMeatStatus
+    [Migration("20260406235542_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace meat_console_API.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("meat_console_API.Entities.Meat", b =>
+            modelBuilder.Entity("meat_control_API.Entities.Meat", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -49,6 +49,9 @@ namespace meat_console_API.Migrations
                     b.Property<string>("ReservedBy")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("SessionId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -64,10 +67,12 @@ namespace meat_console_API.Migrations
 
                     b.HasIndex("OrderId");
 
+                    b.HasIndex("SessionId");
+
                     b.ToTable("Meats");
                 });
 
-            modelBuilder.Entity("meat_console_API.Entities.Order", b =>
+            modelBuilder.Entity("meat_control_API.Entities.Order", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -98,7 +103,7 @@ namespace meat_console_API.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("meat_console_API.Entities.Session", b =>
+            modelBuilder.Entity("meat_control_API.Entities.Session", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -123,18 +128,26 @@ namespace meat_console_API.Migrations
                     b.ToTable("Sessions");
                 });
 
-            modelBuilder.Entity("meat_console_API.Entities.Meat", b =>
+            modelBuilder.Entity("meat_control_API.Entities.Meat", b =>
                 {
-                    b.HasOne("meat_console_API.Entities.Order", "Order")
+                    b.HasOne("meat_control_API.Entities.Order", "Order")
                         .WithMany("Meats")
                         .HasForeignKey("OrderId");
 
+                    b.HasOne("meat_control_API.Entities.Session", "Session")
+                        .WithMany()
+                        .HasForeignKey("SessionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Order");
+
+                    b.Navigation("Session");
                 });
 
-            modelBuilder.Entity("meat_console_API.Entities.Order", b =>
+            modelBuilder.Entity("meat_control_API.Entities.Order", b =>
                 {
-                    b.HasOne("meat_console_API.Entities.Session", "Session")
+                    b.HasOne("meat_control_API.Entities.Session", "Session")
                         .WithMany()
                         .HasForeignKey("SessionId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -143,7 +156,7 @@ namespace meat_console_API.Migrations
                     b.Navigation("Session");
                 });
 
-            modelBuilder.Entity("meat_console_API.Entities.Order", b =>
+            modelBuilder.Entity("meat_control_API.Entities.Order", b =>
                 {
                     b.Navigation("Meats");
                 });

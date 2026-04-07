@@ -1,4 +1,4 @@
-﻿namespace meat_console_API.Entities
+﻿namespace meat_control_API.Entities
 {
     public class Session
     {

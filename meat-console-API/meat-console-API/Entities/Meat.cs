@@ -1,6 +1,6 @@
-﻿using meat_console_API.Enums;
+﻿using meat_control_API.Enums;
 
-namespace meat_console_API.Entities
+namespace meat_control_API.Entities
 {
     public class Meat
     {
@@ -8,6 +8,8 @@ namespace meat_console_API.Entities
         public int MeatNumber { get; private set; }
         public int? OrderId { get; private set; }
         public Order? Order { get; private set; }
+        public int SessionId { get; private set; }
+        public Session Session { get; private set; }
         public MeatStatus Status { get; private set; }
         public string? ReservedBy { get; private set; }
         public MeatCut Cut { get; private set; }
@@ -20,7 +22,7 @@ namespace meat_console_API.Entities
 
         }
 
-        public Meat(int meatNumber, MeatCut cut, decimal priceKg, decimal weightKg)
+        public Meat(int meatNumber, MeatCut cut, decimal priceKg, decimal weightKg, int sessionId)
         {
             MeatNumber = meatNumber;
             Status = MeatStatus.Available;
@@ -28,6 +30,7 @@ namespace meat_console_API.Entities
             PriceKg = priceKg;
             WeightKg = weightKg;
             TotalPrice = CalculateTotalPrice();
+            SessionId = sessionId;
         }
 
         public decimal CalculateTotalPrice()
@@ -40,7 +43,7 @@ namespace meat_console_API.Entities
             WeightKg = WeightKg / 2;
             TotalPrice = CalculateTotalPrice();
 
-            return new Meat(MeatNumber, Cut, PriceKg, WeightKg);
+            return new Meat(MeatNumber, Cut, PriceKg, WeightKg, SessionId);
         }
 
         public void Reserve(string clientName)

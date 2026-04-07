@@ -1,6 +1,6 @@
-﻿using meat_console_API.Enums;
+﻿using meat_control_API.Enums;
 
-namespace meat_console_API.Pricing
+namespace meat_control_API.Pricing
 {
     public class MeatPricing
     {
